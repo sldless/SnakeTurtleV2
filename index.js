@@ -1,40 +1,72 @@
 from turtle import *
 from random import *
 import time
-screen = Screen()
 turtle = Turtle()
+screen = Screen()
+turtle.shape("triangle")
+hideturtle()
+turtle.color("white")
+turtle.penup()
+turtle.goto(-20,30)
 turtle.go = None
 food = Turtle()
 food.speed(0)
 food.shape("turtle")
 food.color("green")
 food.penup()
-food.goto(0,100)
-def go_up():
+food.goto(20,100)
+score = 0
+highscore = 0
+def up():
     if turtle.go != "down":
         turtle.sety(turtle.ycor() + 20)
 
-def go_down():
+def down():
     if turtle.go != "up":
         turtle.sety(turtle.ycor() - 20)
 
-def go_left():
+def left():
     if turtle.go != "right":
         turtle.setx(turtle.ycor() - 20)
 
-def go_right():
+def right():
     if turtle.go != "left":
         turtle.setx(turtle.ycor() + 20)
-
+pen = Turtle()
+pen.speed(0)
+pen.color("white")
+pen.penup()
+pen.hideturtle()
+pen.goto(0, 100)
+turtle.clear()
+pen_high = Turtle()
+pen_high.speed(0)
+pen_high.color("white")
+pen_high.penup()
+pen_high.hideturtle()
+pen_high.goto(0, 60)
+pen_high.write("HighScore: 0", align="center", font=("Courier", 24, "normal"))
+turtle.clear()
+pen.write("Score: 0", align="center", font=("Courier", 24, "normal"))
 color(randint(0, 255), randint(0, 255),randint(0, 255))
 screen.listen()
-screen.onkey(go_up, 'Up')
-screen.onkey(go_down, 'Down')
-screen.onkey(go_left, 'Left')
-screen.onkey(go_right, 'Right')
+screen.onkey(up, 'Up')
+screen.onkey(down, 'Down')
+screen.onkey(left, 'Left')
+screen.onkey(right, 'Right')
+screen.bgcolor('black')
 while True:
-    x = randint(-100, 100)
+    screen.update()
+    x = randint(-130, 130)
     y = randint(-30, 20)
     food.goto(x,y)
-    time.sleep(1)
+    if score > highscore:
+        highscore = score+1
+    if turtle.distance(food) <= 20:    
+        score += 1      
+        pen.clear()
+        pen_high.clear()
+        pen.write('Score: {}'.format(score), align="center", font=("Courier", 24, "normal"))
+        pen.write("HighScore: {}".format(highscore), align="center", font=("Courier", 24, "normal"))
+    time.sleep(1.4)
 done()
